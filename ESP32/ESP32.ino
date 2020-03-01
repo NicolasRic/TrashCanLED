@@ -12,12 +12,36 @@ Desc:    Checks evey x time and updates the leds connected
 
 WiFiMulti wifiMulti;
 
+#define REDPIN 13
+#define GREENPIN 12
+#define BLUEPIN 14
+
+#define RED 0
+#define GREEN 1
+#define BLUE 2
+
+#define PWM_FREQ 5000
+#define RESOLUTION 8
+
 void setup() {
   Serial.begin(115200);
   Serial.println("Starting...");
 
   //Adds the accesspoint to connect to
   wifiMulti.addAP(SSIDName, SSIDPass);
+
+  //Setup pins
+  ledcSetup(RED, PWM_FREQ, RESOLUTION);
+  ledcSetup(GREEN, PWM_FREQ, RESOLUTION);
+  ledcSetup(BLUE, PWM_FREQ, RESOLUTION);
+
+  ledcAttachPin(REDPIN, RED);
+  ledcAttachPin(GREENPIN, GREEN);
+  ledcAttachPin(BLUEPIN, BLUE);
+
+  ledcWrite(RED, 50);
+  ledcWrite(GREEN, 50);
+  ledcWrite(BLUE, 50);
 }
 
 void loop() {
@@ -44,13 +68,16 @@ void loop() {
 
   http.end();
   
-  delay(500);
+  delay(5000);
 
+  /*
   Serial.println("Going to sleep, will wake in: " + String(CheckRate) + " Seconds.");
   
   delay(5000);
 
+  //Note pin will be turned off on sleep
   esp_sleep_enable_timer_wakeup(CheckRate * 1000000);
   esp_deep_sleep_start();
+  */
 
 }
