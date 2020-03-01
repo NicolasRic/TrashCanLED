@@ -9,8 +9,10 @@ Desc:    Checks evey x time and updates the leds connected
 #include <WiFi.h>
 #include <WiFiMulti.h>
 #include <HTTPClient.h>
+#include <ArduinoJson.h>
 
 WiFiMulti wifiMulti;
+StaticJsonDocument<JSON_ARRAY_SIZE(10)> doc;
 
 #define REDPIN 13
 #define GREENPIN 12
@@ -38,11 +40,9 @@ void setup() {
   ledcAttachPin(REDPIN, RED);
   ledcAttachPin(GREENPIN, GREEN);
   ledcAttachPin(BLUEPIN, BLUE);
-
-  ledcWrite(RED, 50);
-  ledcWrite(GREEN, 50);
-  ledcWrite(BLUE, 50);
 }
+
+void updateLED(String bright);
 
 void loop() {
   //Waits until connected
@@ -61,7 +61,9 @@ void loop() {
   
   if(httpCode == HTTP_CODE_OK) {
     Serial.println("[HTTP] REQUEST OK ");
-    Serial.println(http.getString());
+
+    updateLED(http.getString());
+
   } else {
     Serial.println("[HTTP] REQUEST ERROR: " + String(http.GET()));
   }
@@ -80,4 +82,16 @@ void loop() {
   esp_deep_sleep_start();
   */
 
+}
+
+/*
+Updates the LED PWM frquency
+Takes in a JSON string with the different colours
+*/
+void updateLED(String bright) {
+  deserializeJson(doc, bright);
+
+  ledcWrite(RED, doc[0]["R"]);
+  ledcWrite(GREEN, doc[0]["G"]);
+  ledcWrite(BLUE, doc[0]["B"]);
 }
