@@ -9,7 +9,7 @@ def index():
 
 @app.route('/TrashCanLED/next/', methods=['GET'])
 def nextDelivery():
-    return jsonify([{'R': 0, 'G': 0, 'B': 0}])
+    return jsonify([{'R': 255, 'G': 0, 'B': 0}, {'R': 0, 'G': 255, 'B': 0}, {'R': 0, 'G': 0, 'B': 255}, {'R': 255, 'G': 0, 'B': 0}])
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
