@@ -1,0 +1,23 @@
+{
+  "name": "trashcanled",
+  "version": "0.0.1",
+  "description": "A server for a internet of things device",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolasRic/TrashCanLED.git"
+  },
+  "author": "Nicolas Ricci",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NicolasRic/TrashCanLED/issues"
+  },
+  "homepage": "https://github.com/NicolasRic/TrashCanLED#readme"
+}
