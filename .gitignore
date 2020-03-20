@@ -1,3 +1,4 @@
 ESP32/configFile.h
 .vscode/*
 node_modules/
+config.json
